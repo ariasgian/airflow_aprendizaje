@@ -44,9 +44,9 @@ def tarea0_func(**kwargs):
         project_id=project_id,
         dag=dag
     )
-    print(kwargs)
+    #print(kwargs)
     tables=get_dataset_tables.execute(context=kwargs)
-    print(tables) #mostrar lista
+    #print(tables) #mostrar lista
     [print(table.get('tableId')) for table in tables]
     #for table in tables:
     #    print(table['tableId'])
