@@ -1,0 +1,118 @@
+[
+  {
+    "name": "CUSTOMER_ID",
+    "type": "STRING"
+  },
+  {
+    "name": "REFERENTE_PAGO_FAN",
+    "type": "STRING"
+  },
+  {
+    "name": "EMAIL",
+    "type": "STRING"
+  },
+  {
+    "name": "OBJECT_ID",
+    "type": "FLOAT"
+  },
+  {
+    "name": "INSTANCIA_CBS_FAN",
+    "type": "STRING"
+  },
+  {
+    "name": "FECHA_MORA_HITO_FAN",
+    "type": "DATE"
+  },
+  {
+    "name": "CUENTA_NPLAY",
+    "type": "STRING"
+  },
+  {
+    "name": "CUENTA_SEGMENTACION",
+    "type": "STRING"
+  },
+  {
+    "name": "DEUDA_VENCIDA_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_MINIMO_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_3_CUOTAS_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_6_CUOTAS_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_9_CUOTAS_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_12_CUOTAS_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "PAGO_TOTAL_12_CUOTAS_FAN",
+    "type": "FLOAT"
+  },
+  {
+    "name": "CUENTA_Q_FIJA_TV",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_FIJA_INTERNET",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_FIJA_TOIP",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_MOVIL_ABONO",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_MOVIL_PRE",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_FIJA_BUNDLE",
+    "type": "INTEGER"
+  },
+  {
+    "name": "FECHA_FOTO",
+    "type": "DATE"
+  },
+  {
+    "name": "FECHA_PROCESO",
+    "type": "DATE"
+  },
+  {
+    "name": "FL_ENVIO",
+    "type": "INTEGER"
+  },
+  {
+    "name": "URL_PAGO",
+    "type": "STRING"
+  },
+  {
+    "name": "COLLECCION_GRUPO",
+    "type": "STRING"
+  },
+  {
+    "name": "LINEA_VERSION",
+    "type": "STRING"
+  },
+  {
+    "name": "FLG_DPF",
+    "type": "INTEGER"
+  },
+  {
+    "name": "CUENTA_Q_FIJA_FLOW",
+    "type": "INTEGER"
+  }
+]

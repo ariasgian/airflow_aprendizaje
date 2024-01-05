@@ -14,7 +14,8 @@ from airflow.models.dag import DAG
 from airflow.providers.google.cloud.operators.bigquery import (
     BigQueryGetDatasetTablesOperator,
     BigQueryInsertJobOperator,
-    BigQueryDeleteTableOperator
+    BigQueryDeleteTableOperator,
+    BigQueryCheckOperator
 )
 from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.operators.gcs import GCSCreateBucketOperator, GCSDeleteBucketOperator
@@ -22,7 +23,8 @@ from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesyste
 from airflow.utils.trigger_rule import TriggerRule
 credentials, project_id = google.auth.default()
 DATASET_NAME = 'test_gian'
-table_id = 'airflow1'
+table_id = 'politica_contacto'
+location_teco = 'us-east4'
 vez = 1
 
 dag_args = {
@@ -34,7 +36,7 @@ dag_args = {
     "retry:delay": timedelta(minutes=5)
 }
 dag = DAG(
-    "Listar_tablas_2",
+    "politica_contacto",
     description= "Mi primer DAG",
     default_args=dag_args,
     schedule=timedelta(days=1),
@@ -42,54 +44,58 @@ dag = DAG(
     catchup=False,
     tags=["example"]
 )
-query1 = (
-    f'CALL `{project_id}.{DATASET_NAME}.bigquery_airflow`()'
+query_mora = (
+    f'CALL `{project_id}.{DATASET_NAME}.mora_historico`()'
+)
+query_politica = (
+    f'CALL `{project_id}.{DATASET_NAME}.{table_id}`()'
 )
 def mostrar_listado_func(**kwargs):    
     #print(kwargs)
-    get_dataset_tables = BigQueryGetDatasetTablesOperator(
-        task_id="get_dataset_tables", 
-        dataset_id=DATASET_NAME,
-        project_id=project_id,
-        dag=dag
-    )
-    tables=get_dataset_tables.execute(context=kwargs)
-    #print(tables) #mostrar lista
-    tablas= [table.get('tableId') for table in tables]
-    if table_id in tablas:
-        print('esta')
-    else:
-        print('no esta')    
-    return {"ok":0}
-insert_query_job = BigQueryInsertJobOperator(
-    task_id="insert_query_job",
+    
+    tables=check_count
+    print(tables)
+mora_job = BigQueryInsertJobOperator(
+    task_id="mora_job",
     configuration={
         "query": {
-            "query": query1,
+            "query": query_mora,
             "useLegacySql": False,
             "priority": "BATCH",
         }
     },
     project_id=project_id,
-    location='us-east4',
+    location=location_teco,
     dag=dag
 )
-
-
-mostrar_listado_antes = PythonOperator(
-    task_id = "mostrar_listado_antes",
-    python_callable=mostrar_listado_func,
-    dag = dag
+pol_contacto_job = BigQueryInsertJobOperator(
+    task_id="pol_contacto_job",
+    configuration={
+        "query": {
+            "query": query_mora,
+            "useLegacySql": False,
+            "priority": "BATCH",
+        }
+    },
+    project_id=project_id,
+    location=location_teco,
+    dag=dag
 )
-
-mostrar_listado_despues = PythonOperator(
-    task_id = "mostrar_listado_despues",
-    python_callable=mostrar_listado_func,
-    dag = dag
-)
-delete_table = BigQueryDeleteTableOperator(
-    task_id="delete_table",
-    deletion_dataset_table=f"{project_id}.{DATASET_NAME}.{table_id}",
-    dag = dag
-)
-insert_query_job >> mostrar_listado_antes >> delete_table >> mostrar_listado_despues
+check_count = BigQueryCheckOperator(
+        task_id="check_count",
+        sql=f"SELECT COUNT(*) FROM {DATASET_NAME}.{table_id}",
+        use_legacy_sql=False,
+        location=location_teco,
+        dag=dag
+    )
+#chequeo_operator = PythonOperator(
+#    task_id = "chequeo_job",
+#    python_callable=mostrar_listado_func,
+#    dag = dag
+#)
+# delete_table = BigQueryDeleteTableOperator(
+#     task_id="delete_table",
+#     deletion_dataset_table=f"{project_id}.{DATASET_NAME}.{table_id}",
+#     dag = dag
+# )
+mora_job >> pol_contacto_job >> check_count

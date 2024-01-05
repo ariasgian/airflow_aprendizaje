@@ -15,7 +15,7 @@ dag_args = {
     "retry:delay": timedelta(minutes=5)
 }
 dag = DAG(
-    "test1",
+    "test",
     description= "Mi primer DAG",
     default_args=dag_args,
     schedule=timedelta(days=1),

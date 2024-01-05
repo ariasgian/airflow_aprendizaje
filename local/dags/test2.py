@@ -21,7 +21,7 @@ from airflow.utils.trigger_rule import TriggerRule
 credentials, project_id = google.auth.default()
 load_dotenv()
 dag_args = {
-    "depemd_on_past" : False,
+    "depend_on_past" : False,
     "email" : ["test@test.com"],
     "email_on_failure" : False,
     "email_on_retry" : False,
