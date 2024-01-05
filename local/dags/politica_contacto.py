@@ -23,7 +23,7 @@ from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesyste
 from airflow.utils.trigger_rule import TriggerRule
 credentials, project_id = google.auth.default()
 DATASET_NAME = 'test_gian'
-table_id = 'politica_contacto'
+table_id = 'politica_contactacion'
 location_teco = 'us-east4'
 vez = 1
 
@@ -72,7 +72,7 @@ pol_contacto_job = BigQueryInsertJobOperator(
     task_id="pol_contacto_job",
     configuration={
         "query": {
-            "query": query_mora,
+            "query": query_politica,
             "useLegacySql": False,
             "priority": "BATCH",
         }
